@@ -78,7 +78,7 @@ module.exports = [
         type: "toggle",
         messageKey: "Fuzzy",
         label: "Uhrzeit runden",
-        description: "z.B. „kurz vor acht“ statt „zwei vor acht“",
+        description: "„kurz vor acht“ statt „zwei vor acht“",
         defaultValue: true,
       },
       {
@@ -133,7 +133,7 @@ module.exports = [
       {
         type: "select",
         messageKey: "BatteryIcon",
-        label: "Batteriestatus anzeigen",
+        label: "Batteriestatus",
         defaultValue: "1",
         serializeValueAs: "integer",
         options: [
@@ -142,7 +142,7 @@ module.exports = [
             "value": "0"
           },
           {
-            "label": "Wenn unter 10%",
+            "label": "Wenn unter 10% oder beim Laden",
             "value": "1"
           },
           {
@@ -154,7 +154,7 @@ module.exports = [
       {
         type: "select",
         messageKey: "BluetoothIcon",
-        label: "Bluetooth-Icon anzeigen",
+        label: "Bluetooth-Icon",
         defaultValue: "1",
         serializeValueAs: "integer",
         options: [
