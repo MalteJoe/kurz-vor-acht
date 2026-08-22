@@ -1,39 +1,124 @@
 {
-    "configurations": [
-        {
-            "name": "Pebble Time Round (Chalk)",
-            "includePath": [
-                "${workspaceFolder}/build/**",
-                "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include"
-            ],
-            "defines": [
-                "PBL_COLOR",
-                "PBL_ROUND",
-                "PBL_PLATFORM_CHALK",
-                "PBL_DISPLAY_WIDTH=180",
-                "PBL_DISPLAY_HEIGHT=180"
-            ],
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "c17",
-            "cppStandard": "c++17"
-        },
-        {
-            "name": "Pebble Time 2 (Emery)",
-            "includePath": [
-                "${workspaceFolder}/build/**",
-                "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/emery/include"
-            ],
-            "defines": [
-                "PBL_COLOR",
-                "PBL_RECT",
-                "PBL_PLATFORM_EMERY",
-                "PBL_DISPLAY_WIDTH=200",
-                "PBL_DISPLAY_HEIGHT=228"
-            ],
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "c17",
-            "cppStandard": "c++17"
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "Aplite (Pebble Classic)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include"
+      ],
+      "defines": [
+        "PBL_BW",
+        "PBL_RECT",
+        "PBL_PLATFORM_APLITE",
+        "PBL_DISPLAY_WIDTH=144",
+        "PBL_DISPLAY_HEIGHT=168"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    },
+    {
+      "name": "Basalt (Pebble Time)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include"
+      ],
+      "defines": [
+        "PBL_COLOR",
+        "PBL_RECT",
+        "PBL_PLATFORM_BASALT",
+        "PBL_DISPLAY_WIDTH=144",
+        "PBL_DISPLAY_HEIGHT=168"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    },
+    {
+      "name": "Chalk (Pebble Time Round)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include"
+      ],
+      "defines": [
+        "PBL_COLOR",
+        "PBL_ROUND",
+        "PBL_PLATFORM_CHALK",
+        "PBL_DISPLAY_WIDTH=180",
+        "PBL_DISPLAY_HEIGHT=180"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    },
+    {
+      "name": "Diorite (Pebble 2)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/diorite/include"
+      ],
+      "defines": [
+        "PBL_BW",
+        "PBL_RECT",
+        "PBL_PLATFORM_DIORITE",
+        "PBL_DISPLAY_WIDTH=144",
+        "PBL_DISPLAY_HEIGHT=168"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    },
+    {
+      "name": "Emery (Pebble Time 2)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/emery/include"
+      ],
+      "defines": [
+        "PBL_COLOR",
+        "PBL_RECT",
+        "PBL_PLATFORM_EMERY",
+        "PBL_DISPLAY_WIDTH=200",
+        "PBL_DISPLAY_HEIGHT=228"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    },
+    {
+      "name": "Flint (Pebble 2 Duo)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/flint/include"
+      ],
+      "defines": [
+        "PBL_BW",
+        "PBL_RECT",
+        "PBL_PLATFORM_FLINT",
+        "PBL_DISPLAY_WIDTH=144",
+        "PBL_DISPLAY_HEIGHT=168"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    },
+    {
+      "name": "Gabbro (Pebble Round 2)",
+      "includePath": [
+        "${workspaceFolder}/build/**",
+        "${HOME}/.local/share/pebble-sdk/SDKs/current/sdk-core/pebble/gabbro/include"
+      ],
+      "defines": [
+        "PBL_COLOR",
+        "PBL_ROUND",
+        "PBL_PLATFORM_GABBRO",
+        "PBL_DISPLAY_WIDTH=260",
+        "PBL_DISPLAY_HEIGHT=260"
+      ],
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "cppStandard": "c++17"
+    }
+  ],
+  "version": 4
 }
