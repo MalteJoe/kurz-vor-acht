@@ -12,8 +12,7 @@
 static Window *window;
 
 static TextLayer 
-  *minuteLayer_2longlines, 
-  *minuteLayer_3lines, 
+  *minuteLayer_2longlines,
   *minuteLayer_2biglines,
   *hourLayer, 
   *dateLayer;
@@ -21,6 +20,9 @@ static TextLayer
 static Layer 
   *battery_layer,
   *bluetooth_layer;
+
+// Hacky way in order to squeeze the text for small displays with quick view some more
+static bool we_need_every_pixel = false;
 
 void set_theme() {
   APP_LOG(APP_LOG_LEVEL_INFO,"Setting colors according to theme %d",key_indicator_theme);
@@ -74,7 +76,6 @@ void set_theme() {
 
   text_layer_set_text_color(dateLayer, date);
 
-  text_layer_set_text_color(minuteLayer_3lines, min);
   text_layer_set_text_color(minuteLayer_2longlines, min);
   text_layer_set_text_color(minuteLayer_2biglines, min);
 
@@ -111,10 +112,13 @@ void layout_layers() {
   };
 #endif
 
+  // Hacky way in order to squeeze the text for small displays with quick view some more
+  we_need_every_pixel = bounds.size.h < BASE_H;
+
   // bounding box with margins depending on the model
 #ifdef PBL_RECT
-  const int vertical_space_available    = bounds.size.h > BASE_H + 10 + 5;
-  const int horizontal_space_available  = bounds.size.w > BASE_W + 10*2;
+  const bool vertical_space_available    = bounds.size.h > BASE_H + 10 + 5;
+  const bool horizontal_space_available  = bounds.size.w > BASE_W + 10*2;
   const GEdgeInsets margin = GEdgeInsets(
     vertical_space_available    ? 10 : 0, // top
     horizontal_space_available  ? 10 : 0, // right
@@ -133,18 +137,15 @@ void layout_layers() {
   grect_align(&r_text_area, &r_drawing_area, box_align, false);
 
   // Minute Layers
-  text_layer_set_text_alignment(minuteLayer_3lines, text_align);
-  layer_set_frame(text_layer_get_layer(minuteLayer_3lines), grect_inset(r_text_area, GEdgeInsets(10, 0, 0, 0)));
-
   text_layer_set_text_alignment(minuteLayer_2longlines, text_align);
-  layer_set_frame(text_layer_get_layer(minuteLayer_2longlines), grect_inset(r_text_area, GEdgeInsets(44, 0, 0, 0)));
+  layer_set_frame(text_layer_get_layer(minuteLayer_2longlines), grect_inset(r_text_area, GEdgeInsets(we_need_every_pixel ? 51 : 44, 0, 0, 0)));
 
   text_layer_set_text_alignment(minuteLayer_2biglines, text_align);
-  layer_set_frame(text_layer_get_layer(minuteLayer_2biglines), grect_inset(r_text_area, GEdgeInsets(23, 0, 0, 0)));
+  layer_set_frame(text_layer_get_layer(minuteLayer_2biglines), grect_inset(r_text_area, GEdgeInsets(we_need_every_pixel ? 30 : 23, 0, 0, 0)));
 
   // Hour Layer
   text_layer_set_text_alignment(hourLayer, text_align);
-  layer_set_frame(text_layer_get_layer(hourLayer), grect_inset(r_text_area, GEdgeInsets(109, 0, 0, 0)));
+  layer_set_frame(text_layer_get_layer(hourLayer), grect_inset(r_text_area, GEdgeInsets(we_need_every_pixel ? 116 : 109, 0, 0, 0)));
 
   GRect battery_frame = layer_get_bounds(battery_layer);
   GRect bt_frame = layer_get_bounds(bluetooth_layer);
@@ -187,11 +188,6 @@ void load_text_layers() {
 
   //Actual position/size/alignment is applied by layout_layers(); GRectZero
   //here is just a valid placeholder for text_layer_create().
-  minuteLayer_3lines = text_layer_create(GRectZero);
-  text_layer_set_background_color(minuteLayer_3lines, GColorClear);
-  text_layer_set_font(minuteLayer_3lines, fonts_load_custom_font(robotoLight));
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(minuteLayer_3lines));
-
   minuteLayer_2longlines = text_layer_create(GRectZero);
   text_layer_set_background_color(minuteLayer_2longlines, GColorClear);
   text_layer_set_font(minuteLayer_2longlines, fonts_load_custom_font(robotoLight));
@@ -218,17 +214,7 @@ void load_text_layers() {
   layer_set_hidden(text_layer_get_layer(dateLayer), !key_indicator_date);
 }
 
-void update_time_text_3_minute_lines(const char* minutes, const char* hours, const char* date) {
-  layer_set_hidden(text_layer_get_layer(minuteLayer_3lines), false);
-  layer_set_hidden(text_layer_get_layer(minuteLayer_2longlines), true);
-  layer_set_hidden(text_layer_get_layer(minuteLayer_2biglines), true);
-  text_layer_set_text(minuteLayer_3lines, minutes);
-  text_layer_set_text(hourLayer, hours);
-  text_layer_set_text(dateLayer, date);
-}
-
 void update_time_text_2_long_lines(const char* minutes, const char* hours, const char* date) {
-  layer_set_hidden(text_layer_get_layer(minuteLayer_3lines), true);
   layer_set_hidden(text_layer_get_layer(minuteLayer_2longlines), false);
   layer_set_hidden(text_layer_get_layer(minuteLayer_2biglines), true);
   text_layer_set_text(minuteLayer_2longlines, minutes);
@@ -237,7 +223,11 @@ void update_time_text_2_long_lines(const char* minutes, const char* hours, const
 }
 
 void update_time_text_2_big_lines(const char* minutes, const char* hours, const char* date) {
-  layer_set_hidden(text_layer_get_layer(minuteLayer_3lines), true);
+  // Hacky way in order to squeeze the text for small displays with quick view some more
+  if (we_need_every_pixel) {
+    update_time_text_2_long_lines(minutes, hours, date);
+    return;
+  }
   layer_set_hidden(text_layer_get_layer(minuteLayer_2longlines), true);
   layer_set_hidden(text_layer_get_layer(minuteLayer_2biglines), false);
   text_layer_set_text(minuteLayer_2biglines, minutes);
@@ -266,7 +256,6 @@ static void window_load(Window *window) {
 }
 
 static void window_unload(Window *window) {
-  text_layer_destroy(minuteLayer_3lines);
   text_layer_destroy(minuteLayer_2longlines);
   text_layer_destroy(minuteLayer_2biglines);
   text_layer_destroy(hourLayer);

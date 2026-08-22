@@ -6,24 +6,27 @@
 void display_time(const struct tm *time) {
   //Hour Texts
   static const char *const hour_string[] = {
-	"zwölf", "eins","zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf"
+    "zwölf", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf"
    };
 
   //Minute Texts
   static const char *const minute_string[] = {
-    "\npunkt", "eins\nnach", "zwei\nnach", "drei\nnach", "vier\nnach", "fünf\nnach",
-    "sechs\nnach", "sieben\nnach", "acht\nnach", "neun\nnach", "zehn\nnach",
-    "elf\nnach", "zwölf\nnach", "dreizehn nach", "vierzehn nach", "viertel nach",
-    "sechzehn nach", "siebzehn nach", "achtzehn nach", "neunzehn nach", "\nzwanzig nach",
-    "neun\nvor\nhalb", "acht\nvor\nhalb", "sieben\nvor\nhalb", "sechs\nvor\nhalb", "\nfünf vor halb",
-    "vier\nvor\nhalb", "drei\nvor\nhalb", "zwei\nvor\nhalb", "eins\nvor\nhalb", "\nhalb",
-    "eins\nnach\nhalb", "zwei\nnach\nhalb", "drei\nnach\nhalb", "vier\nnach\nhalb", "\nfünf nach halb",
-    "sechs\nnach\nhalb", "sieben\nnach\nhalb", "acht\nnach\nhalb", "neun\nnach\nhalb", "\nzwanzig vor",
-    "neunzehn vor", "achtzehn vor", "siebzehn vor", "sechzehn vor", "drei-\nviertel",
-    "vierzehn vor", "dreizehn vor", "zwölf\nvor", "elf\nvor", "zehn\nvor",
-    "neun\nvor", "acht\nvor", "sieben\nvor", "sechs\nvor", "fünf\nvor",
-    "vier\nvor", "drei\nvor", "zwei\nvor", "eins\nvor", "kurz vor"
+    /*  0 -  4 */ "\npunkt", "eins\nnach", "zwei\nnach", "drei\nnach", "vier\nnach",
+    /*  5 -  9 */ "fünf\nnach", "sechs\nnach", "sieben\nnach", "acht\nnach", "neun\nnach",
+    /* 10 - 14 */ "zehn\nnach", "elf\nnach", "zwölf\nnach", "dreizehn nach", "vierzehn nach",
+    /* 15 - 19 */ "viertel nach", "sechzehn nach", "siebzehn nach", "achtzehn nach", "neunzehn nach",
+    /* 20 - 24 */ "zwanzig nach","neun\nvor halb", "acht\nvor halb", "sieben\nvor halb", "sechs\nvor halb",
+    /* 25 - 29 */ "fünf\nvor halb", "vier\nvor halb", "drei\nvor halb", "zwei\nvor halb", "eins\nvor halb",
+    /* 30 - 34 */ "\nhalb", "eins\nnach halb", "zwei\nnach halb", "drei\nnach halb", "vier\nnach halb",
+    /* 35 - 39 */ "fünf\nnach halb", "sechs\nnach halb", "sieben\nnach halb", "acht\nnach halb", "neun\nnach halb",
+    /* 40 - 44 */ "\nzwanzig vor", "neunzehn vor", "achtzehn vor", "siebzehn vor", "sechzehn vor",
+    /* 45 - 49 */ "viertel vor", "vierzehn vor", "dreizehn vor", "zwölf\nvor", "elf\nvor",
+    /* 50 - 54 */ "zehn\nvor", "neun\nvor", "acht\nvor", "sieben\nvor", "sechs\nvor",
+    /* 55 - 60 */ "fünf\nvor", "vier\nvor", "drei\nvor", "zwei\nvor", "eins\nvor", "kurz vor"
   };
+  // special cases
+  static const char *const dreiviertel = "drei-\nviertel";
+  static const char *const viertel = "viertel";
 
   //Day of week texts
   static const char *const day_string[] = {
@@ -48,77 +51,24 @@ void display_time(const struct tm *time) {
 	min += delta[min%5];
   }
 
-  void(*update_time)(const char* minutes, const char* hours, const char* date);
+  const char *minutes_text = minute_string[min];
+  const char *hours_text = min <= 20 ? hour_string[hour % 12] : hour_string[(hour + 1) % 12];
 
-  switch (min) {
-  default:
-    update_time = update_time_text_2_big_lines;
-    break;
-  case 20:
-  case 21:
-  case 22:
-  case 23:
-  case 24:
-  case 25:
-  case 26:
-  case 27:
-  case 28:
-  case 29:
-  case 31:
-  case 32:
-  case 33:
-  case 34:
-  case 35:
-  case 36:
-  case 37:
-  case 38:
-  case 39:
-  case 40:
-    update_time = update_time_text_3_minute_lines;
-    break;
-  case 13:
-  case 14:
-  case 16:
-  case 17:
-  case 18:
-  case 19:
-  case 41:
-  case 42:
-  case 43:
-  case 44:
-  case 46:
-  case 47:
-    update_time = update_time_text_2_long_lines;
-    break;
-  }
-  
-  static char staticTimeText[20+1] = ""; // Needs to be static because it's used by the system later.
-  staticTimeText[0] = '\0';
-  strcat(staticTimeText , minute_string[min]);
-  
   //Override with Special minute texts
-  if (key_indicator_text_nrw && min == 45) {
-    strcpy(staticTimeText , "viertel vor");
-  }
-  if (key_indicator_text_wien && min == 15) {
-    strcpy(staticTimeText , "\nviertel"); //HINT: also update hour +1!
-  }
-
-  // Hour Text
-  static char staticHourText[10+1] = ""; // Needs to be static because it's used by the system later.
-  if (min <= 20) {
-    if (min == 15 && key_indicator_text_wien) { //Override with Special minute texts
-      strcpy(staticHourText, hour_string[(hour + 1) % 12]);
-    } else {
-      strcpy(staticHourText , hour_string[hour % 12]);
-    }
-  } else {
-    strcpy(staticHourText , hour_string[(hour + 1) % 12]);
+  if (!key_indicator_text_nrw && min == 45) {
+    minutes_text = dreiviertel;
+  } else if (key_indicator_text_wien && min == 15) {
+    minutes_text = viertel;
+    hours_text = hour_string[(hour + 1) % 12];
   }
   
   // Weekday
   static char staticDateText[5+1];
   snprintf(staticDateText, sizeof(staticDateText), "%s %i", day_string[wday], mday);
 
-  update_time(staticTimeText, staticHourText, staticDateText);
+  if (min%15 == 0 || min < 13 || min > 48) {
+    update_time_text_2_big_lines(minutes_text, hours_text, staticDateText);
+  } else {
+    update_time_text_2_long_lines(minutes_text, hours_text, staticDateText);
+  }
 }

@@ -44,6 +44,7 @@ In addition to the [changes](https://github.com/wolframroesler/Deutsch) by [@wol
 * Update Configuration Page to use the clay library
 * make bluetooth and battery icons work with color themes
 * Make it available in the Pebble store
+* fix three line text on flint with quick view
 
 ### Layout
 
@@ -53,7 +54,6 @@ In addition to the [changes](https://github.com/wolframroesler/Deutsch) by [@wol
 
 ## Planned future changes
 
-* fix three line text on flint with quick view
 * make low battery threshold configurable
     * maybe even whether icon is displayed during charging
 * Option to create custom theme with custom colours
