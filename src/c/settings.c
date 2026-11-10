@@ -106,9 +106,7 @@ void settings_process_update(DictionaryIterator *iter) {
 
   t = dict_find(iter, MESSAGE_KEY_BluetoothIcon);
   if (t != NULL) {
-    // TODO with the next release of clay:
-    // key_indicator_bluetooth = t->value->int32;
-    key_indicator_bluetooth = atoi(t->value->cstring);
+    key_indicator_bluetooth = t->value->int32;
   }
 
   t = dict_find(iter, MESSAGE_KEY_VibeOnDisconnect);
@@ -118,23 +116,17 @@ void settings_process_update(DictionaryIterator *iter) {
 
   t = dict_find(iter, MESSAGE_KEY_BatteryIcon);
   if (t != NULL) {
-    // TODO with the next release of clay:
-    // key_indicator_batt_img = t->value->int32;
-    key_indicator_batt_img = atoi(t->value->cstring);
+    key_indicator_batt_img = t->value->int32;
   }
 
   t = dict_find(iter, MESSAGE_KEY_TextNRW);
   if (t != NULL) {
-    // TODO with the next release of clay:
-    // key_indicator_text_nrw = t->value->int32;
-    key_indicator_text_nrw = atoi(t->value->cstring);
+    key_indicator_text_nrw = t->value->int32;
   }
 
   t = dict_find(iter, MESSAGE_KEY_TextWien);
   if (t != NULL) {
-    // TODO with the next release of clay:
-    // key_indicator_text_wien = t->value->int32;
-    key_indicator_text_wien = atoi(t->value->cstring);
+    key_indicator_text_wien = t->value->int32;
   }
 
   t = dict_find(iter, MESSAGE_KEY_Date);
@@ -144,16 +136,12 @@ void settings_process_update(DictionaryIterator *iter) {
 
   t = dict_find(iter, MESSAGE_KEY_ColorTheme);
   if (t != NULL) {
-    // TODO with the next release of clay:
-    // key_indicator_theme = t->value->int32;
-    key_indicator_theme = atoi(t->value->cstring);
+    key_indicator_theme = t->value->int32;
   }
 
   t = dict_find(iter, MESSAGE_KEY_TextAlignment);
   if (t != NULL) {
-    // TODO with the next release of clay:
-    // key_indicator_text_align = t->value->int32;
-    key_indicator_text_align = atoi(t->value->cstring);
+    key_indicator_text_align = t->value->int32;
   }
   
   log_settings();

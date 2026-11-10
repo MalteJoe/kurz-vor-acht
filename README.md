@@ -51,11 +51,11 @@ In addition to the [changes](https://github.com/wolframroesler/Deutsch) by [@wol
 * On larger displays the text is padded to the bottom right with some margin to the screen borders
 * Added configuration option for rectangle displays for text alignment
 * Configuration options to for bluetooth and battery to only show when relevant
+* reduced options for incapable watches (e.g. colours for b/w watches)
 
 ## Planned future changes
 
 * make low battery threshold configurable
     * maybe even whether icon is displayed during charging
 * Option to create custom theme with custom colours
-* reduce options for incapable watches (e.g. colours for b/w watches)
 * reuse same battery assets with pallette inversion instead of having separate resources

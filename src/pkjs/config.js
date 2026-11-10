@@ -13,6 +13,7 @@ module.exports = [
       {
         type: "select",
         messageKey: "ColorTheme",
+        capabilities: ["COLOR"],
         defaultValue: "0",
         label: "Farbschema",
         serializeValueAs: "integer",
@@ -32,6 +33,28 @@ module.exports = [
           {
             label: "Rot",
             value: "3",
+          },
+          {
+            label: "Grau",
+            value: "4",
+          },
+          {
+            label: "Weiß",
+            value: "5",
+          },
+        ],
+      },
+      {
+        type: "select",
+        messageKey: "ColorTheme",
+        capabilities: ["BW"],
+        defaultValue: "0",
+        label: "Farbschema",
+        serializeValueAs: "integer",
+        options: [
+          {
+            label: "Schwarz",
+            value: "0",
           },
           {
             label: "Grau",
@@ -128,12 +151,12 @@ module.exports = [
     items: [
       {
         type: "heading",
-        defaultValue: "Status"
+        defaultValue: "Statusanzeigen"
       },
       {
         type: "select",
         messageKey: "BatteryIcon",
-        label: "Batteriestatus",
+        label: "Batterie",
         defaultValue: "1",
         serializeValueAs: "integer",
         options: [
@@ -154,7 +177,7 @@ module.exports = [
       {
         type: "select",
         messageKey: "BluetoothIcon",
-        label: "Bluetooth-Icon",
+        label: "Bluetooth",
         defaultValue: "1",
         serializeValueAs: "integer",
         options: [
@@ -175,7 +198,7 @@ module.exports = [
       {
         type: "toggle",
         messageKey: "VibeOnDisconnect",
-        label: "Vibrieren bei Bluetooth-Verlust",
+        label: "Vibration bei Bluetooth-Verlust",
         defaultValue: true,
       },
     ]
